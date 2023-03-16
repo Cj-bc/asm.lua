@@ -1,0 +1,37 @@
+@startuml
+!theme blueprint
+
+interface PlayerI {
+  + Play()
+  + Stop()
+}
+class dummyPlayer
+dummyPlayer -|> PlayerI
+
+class transition {
+  + from animationState
+  + to animationState
+  + trigger Func
+}
+transition --> animationState
+
+class animationState {
+}
+
+
+class asm {
+  + currentState animationState
+  + player IPlayer
+  + transitions [transition]
+  + states [animationState]
+  + void AddTransition(transition)
+  + void AddState(transition)
+  + void Update(string, any)
+  + asm New(IPlayer)
+}
+asm "1" o-- "1..n" animationState
+asm "1" o-- "1..n" transition
+asm "1" o-- "1" PlayerI
+
+class exampleApp
+@enduml
