@@ -1,0 +1,13 @@
+* asm.lua -- Action State machine lua
+This library implements simple action state machine for animation in lua.
+
+** Feature
++ Simple action state machine
++ Simple state
+
+*** Not supported
++ Layer
++ Complex state
+  + Blendtree
++ Constraints
+
