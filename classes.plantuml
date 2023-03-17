@@ -1,12 +1,12 @@
 @startuml
 !theme blueprint
 
-interface PlayerI {
+interface IPlayer {
   + Play()
   + Stop()
 }
 class dummyPlayer
-dummyPlayer -|> PlayerI
+dummyPlayer -|> IPlayer
 
 class transition {
   + from animationState
@@ -31,7 +31,7 @@ class asm {
 }
 asm "1" o-- "1..n" animationState
 asm "1" o-- "1..n" transition
-asm "1" o-- "1" PlayerI
+asm "1" o-- "1" IPlayer
 
 class exampleApp
 @enduml
