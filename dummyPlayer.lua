@@ -8,9 +8,7 @@ function dummyPlayer.New()
 end
 
 function dummyPlayer:Play(state)
-  if animationState.Validate(state) then
-    print(string.format("start playing: %s", tostring(state.clip)))
-  end
+  print(string.format("start playing: %s", tostring(state.clip)))
 end
 
 function dummyPlayer:Stop()
