@@ -1,3 +1,4 @@
+---@class IPlayer
 IPlayer = {}
 
 ---Play given clip. If it's playing other clip, it should be stopped

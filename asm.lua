@@ -3,6 +3,7 @@ local transition = require "transition"
 
 asm = {}
 
+---Create new asm instance
 ---@param player IPlayer
 function asm.New(player)
   local startState = state.New("Start")
@@ -37,12 +38,14 @@ end
 
 ---Add new parameter. It's type is inherited from "initial" value
 ---@param name string
----@param initial any
+---@param initial any initial value for the parameter.
 function asm:AddParameter(name, initial)
   self.parameters[name] = initial
 end
 
 ---Update state and change animation if required
+---@param name string
+---@param value any (But should be valid for 'name' parameter
 function asm:Update(name, value)
   if self.parameters[name] == nil then
     return false
@@ -57,6 +60,7 @@ function asm:Update(name, value)
   self:_CheckTransitions()
 end
 
+---Iterate each transitions and find 
 function asm:_CheckTransitions()
   for _, t in pairs(self.transitions) do
     if t:IsFrom(self.currentState) and t:Check(self.parameters) then

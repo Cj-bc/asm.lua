@@ -5,12 +5,14 @@ transition = {}
 ---@param from animationState
 ---@param to animationState
 ---@param triggerFunc fun(params: table): boolean
+---@return transition
 function transition.New(from, to, triggerFunc)
   local obj = { trigger = triggerFunc
               , from = from
               , to   = to
   }
 
+  ---Function for __tostring
   local function toStr(self)
     -- Adjust tab indentation
     local from = string.gsub(tostring(self.from), "\n\t", "\n\t\t")
