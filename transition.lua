@@ -39,7 +39,7 @@ end
 ---@param params table
 ---@return boolean
 function transition:Check(params)
-  return self.trigger(self, params)
+  return self.trigger(params)
 end
 
 
