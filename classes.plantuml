@@ -1,22 +1,38 @@
 @startuml
 !theme blueprint
 
+interface IAnimationClip {
+  + () 
+}
+
+class dummyAnimationClip {
+
+}
+IAnimationClip <|-- dummyAnimationClip
+
 interface IPlayer {
-  + Play()
+  + Play(clip IAnimationClip)
   + Stop()
 }
+IAnimationClip <-- IPlayer
+
 class dummyPlayer
-dummyPlayer -|> IPlayer
+IPlayer <|-- dummyPlayer
+
+
+class animationState {
+}
+animationState o-> IAnimationClip
 
 class transition {
   + from animationState
   + to animationState
   + trigger Func
+
+  + Check()
+  + IsFrom()
 }
 transition --> animationState
-
-class animationState {
-}
 
 
 class asm {
@@ -29,8 +45,8 @@ class asm {
   + void Update(string, any)
   + asm New(IPlayer)
 }
-asm "1" o-- "1..n" animationState
-asm "1" o-- "1..n" transition
+asm "1" o-> "1..n" animationState
+asm "1" o-> "1..n" transition
 asm "1" o-- "1" IPlayer
 
 class exampleApp
