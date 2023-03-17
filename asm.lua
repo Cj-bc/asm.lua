@@ -58,10 +58,10 @@ function asm:Update(name, value)
 end
 
 function asm:_CheckTransitions()
-  for _, transition in pairs(self.transitions) do
-    if transition:IsFrom(self.currentState) and transition:Check(self.parameters) then
+  for _, t in pairs(self.transitions) do
+    if t:IsFrom(self.currentState) and t:Check(self.parameters) then
       self.player:Stop()
-      self.currentState = transition.to
+      self.currentState = t.to
       (self.player):Play(self.currentState)
     end
   end
