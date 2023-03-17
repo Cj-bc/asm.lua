@@ -62,7 +62,7 @@ function asm:_CheckTransitions()
     if t:IsFrom(self.currentState) and t:Check(self.parameters) then
       self.player:Stop()
       self.currentState = t.to
-      (self.player):Play(self.currentState)
+      self.player:Play(self.currentState)
     end
   end
 end
