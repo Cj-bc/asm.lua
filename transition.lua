@@ -1,5 +1,5 @@
 ---@class transition
-transition = {trigger = function(p) return false end}
+transition = {}
 
 ---Create new transition
 ---@param from animationState
@@ -19,10 +19,6 @@ function transition.New(from, to, triggerFunc)
 
     return string.format("(transition :from %s\n\t:to %s\n\t:trigger\n\t%s)"
                         , from, to, trigger)
-  end
-
-  obj.Check = function(self, params)
-    return self.trigger(params)
   end
 
   return setmetatable(obj, {__index=transition, __tostring=toStr})
