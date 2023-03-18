@@ -4,19 +4,17 @@ local transition = require "transition"
 asm = {}
 
 ---Create new asm instance
----@param player IPlayer
-function asm.New(player)
+function asm.New()
   local startState = state.New("Start")
   local obj = { currentState = startState
-              , player = player
               , states = {}
               , transitions = {}
               , parameters = {}
             }
 
   local function toStr(self)
-    return string.format("(asm :currentState %s\n\t:player %s\n\t:states %s)",
-                        self.currentState, self.player, self.states)
+    return string.format("(asm :currentState %s\n\t:states %s)",
+                        self.currentState, self.states)
   end
 
   return setmetatable(obj, {__index=asm, __tostring=toStr})
@@ -64,9 +62,7 @@ end
 function asm:_CheckTransitions()
   for _, t in pairs(self.transitions) do
     if t:IsFrom(self.currentState) and t:Check(self.parameters) then
-      self.player:Stop()
       self.currentState = t.to
-      self.player:Play(self.currentState)
     end
   end
 end
@@ -74,11 +70,6 @@ end
 ---Start executing current state
 function asm:Run()
   self:_CheckTransitions()
-end
-
----Stop currently running state
-function asm:Stop()
-  self.player:Stop()
 end
 
 return asm

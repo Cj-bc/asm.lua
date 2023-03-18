@@ -2,7 +2,7 @@ local asm = require "asm"
 local animationState = require "animationState"
 local dummyPlayer = require "dummyPlayer"
 
-stateMachine = asm.New(dummyPlayer.New())
+stateMachine = asm.New()
 
 local fooBar = animationState.New("")
 stateMachine:AddState(fooBar)
