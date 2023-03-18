@@ -1,12 +1,11 @@
 local asm = require "asm"
-local animationState = require "animationState"
 local dummyPlayer = require "dummyPlayer"
 
 stateMachine = asm.New()
 
-local fooBar = animationState.New("")
+local fooBar = "fooBar"
 stateMachine:AddState(fooBar)
-local popup = animationState.New("popup.clip")
+local popup = "popup.clip"
 stateMachine:AddState(popup)
 
 stateMachine:AddParameter("stop", false)

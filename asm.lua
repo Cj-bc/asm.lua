@@ -1,11 +1,10 @@
-local state = require "animationState"
 local transition = require "transition"
 
 asm = {}
 
 ---Create new asm instance
 function asm.New()
-  local startState = state.New("Start")
+  local startState = "Start"
   local obj = { currentState = startState
               , states = {}
               , transitions = {}
@@ -24,12 +23,12 @@ function asm:AddTransition(transition)
   table.insert(self.transitions, transition)
 end
 
----@param state animationState
+---@param state any
 function asm:AddStartTransition(state)
   table.insert(self.transitions, transition.New(self.currentState, state, function(_) return true end))
 end
 
----@param state animationState
+---@param state any
 function asm:AddState(state)
   table.insert(self.states, state)
 end
