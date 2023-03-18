@@ -34,6 +34,11 @@ function asm:AddState(state)
 end
 
 ---Add new parameter. It's type is inherited from "initial" value
+---
+---Available types are: primitives, trigger
+---Trigger is an object that contains two fields, "type: trigger" and "status: "
+---It should be false after executing "Update" function
+---
 ---@param name string
 ---@param initial any initial value for the parameter.
 function asm:AddParameter(name, initial)
@@ -43,18 +48,35 @@ end
 ---Update state and change animation if required
 ---@param name string
 ---@param value any (But should be valid for 'name' parameter
+---@return boolean true if update success, false otherwise
 function asm:Update(name, value)
+   ---postHook contains all hook functions required to run at end of Update sequence
+   local postHook = function() end
+
+  --Type checks {{{
   if self.parameters[name] == nil then
     return false
   end
 
-  if type(self.parameters[name]) ~= type(value) then
-    return false
+  -- Triggers should be processed specially.
+  if type(self.parameters[name]) == "table" and self.parameters[name].type == "trigger" then
+     self.parameters[name].state = true
+     postHook = function() self.parameters[name].state = false end
+  else
+     -- Basically, value should be the same type as parameter value.
+     -- But object parameter sometimes require other data type(e.g. trigger).
+     if type(self.parameters[name]) ~= type(value) then
+	return false
+     end
+     self.parameters[name] = value
   end
+  --}}}
 
-  self.parameters[name] = value
 
   self:_CheckTransitions()
+
+  -- Deactivate each triggers
+  postHook()
 end
 
 ---Iterate each transitions and find 
