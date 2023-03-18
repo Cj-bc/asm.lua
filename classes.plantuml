@@ -22,7 +22,6 @@ IPlayer <|-- dummyPlayer
 
 class animationState {
 }
-animationState o-> IAnimationClip
 
 class transition {
   + from animationState
@@ -37,7 +36,6 @@ transition --> animationState
 
 class asm {
   + currentState animationState
-  + player IPlayer
   + transitions [transition]
   + states [animationState]
   + void AddTransition(transition)
@@ -47,7 +45,6 @@ class asm {
 }
 asm "1" o-> "1..n" animationState
 asm "1" o-> "1..n" transition
-asm "1" o-- "1" IPlayer
 
 class exampleApp
 @enduml
