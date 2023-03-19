@@ -6,6 +6,10 @@ IPlayer = {}
 function IPlayer:Play(clip)
 end
 
+---@return boolean
+function IPlayer:IsPlaying()
+end
+
 ---Stop playing current clip
 function IPlayer:Stop()
 end
