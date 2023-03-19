@@ -1,5 +1,4 @@
 local IPlayer = require "IPlayer"
-local animationState = require "animationState"
 
 dummyPlayer = {}
 
