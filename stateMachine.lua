@@ -4,11 +4,11 @@ local transition = require "transition"
 stateMachine = {}
 
 ---state that is used as Start node.
-stateMachine.STARTSTATE = {type = "stateMachine.Start"}
+stateMachine.STARTSTATE = setmetatable({type = "stateMachine.Start"}, {__tostring = function() return "stateMachine.Start" end})
 
 ---state that is used as End node.
 ---Once stateMachine reaches this state, it's over.
-stateMachine.ENDSTATE = {type = "stateMachine.End"}
+stateMachine.ENDSTATE = setmetatable({type = "stateMachine.End"}, {__tostring = function() return "stateMachine.End" end})
 
 ---Create new stateMachine instance
 function stateMachine.New()
