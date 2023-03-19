@@ -95,6 +95,7 @@ function stateMachine:_CheckTransitions()
   for _, t in pairs(self.transitions) do
     if t:IsFrom(self.currentState) and t:Check(self.parameters) then
       self.currentState = t.to
+      break
     end
   end
 end
