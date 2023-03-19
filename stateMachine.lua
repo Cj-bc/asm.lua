@@ -3,10 +3,11 @@ local transition = require "transition"
 ---@class stateMachine
 stateMachine = {}
 
+---state that is used as Start node.
+stateMachine.STARTSTATE = {type = "stateMachine.Start"}
 ---Create new stateMachine instance
 function stateMachine.New()
-  local startState = "Start"
-  local obj = { currentState = startState
+  local obj = { currentState = stateMachine.STARTSTATE
               , states = {}
               , transitions = {}
               , parameters = {}
