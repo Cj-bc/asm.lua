@@ -13,7 +13,7 @@ stateMachine.ENDSTATE = setmetatable({type = "stateMachine.End"}, {__tostring = 
 ---Create new stateMachine instance
 function stateMachine.New()
   local obj = { currentState = stateMachine.STARTSTATE
-              , states = {}
+              , states = {stateMachine.ENDSTATE}
               , transitions = {}
               , parameters = {}
             }
