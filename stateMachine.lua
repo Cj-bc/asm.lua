@@ -5,6 +5,11 @@ stateMachine = {}
 
 ---state that is used as Start node.
 stateMachine.STARTSTATE = {type = "stateMachine.Start"}
+
+---state that is used as End node.
+---Once stateMachine reaches this state, it's over.
+stateMachine.ENDSTATE = {type = "stateMachine.End"}
+
 ---Create new stateMachine instance
 function stateMachine.New()
   local obj = { currentState = stateMachine.STARTSTATE
@@ -28,6 +33,10 @@ end
 ---@param state any
 function stateMachine:AddStartTransition(state)
   table.insert(self.transitions, transition.New(self.currentState, state, function(_) return true end))
+end
+
+function stateMachine:AddEndTransition(state, condition)
+   table.insert(self.transitions, transition.New(state, self.ENDSTATE, condition))
 end
 
 ---@param state any
