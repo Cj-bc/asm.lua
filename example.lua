@@ -1,34 +1,34 @@
-local asm = require "asm"
+local stateMachine = require "stateMachine"
 
-stateMachine = asm.New()
+mySM = stateMachine.New()
 
 local idle = "idle"
 local popup = "popup"
 local transmitting = "transmitting"
 local shrink = "shrink"
-stateMachine:AddState(idle)
-stateMachine:AddState(popup)
-stateMachine:AddState(transmitting)
-stateMachine:AddState(shrink)
+mySM:AddState(idle)
+mySM:AddState(popup)
+mySM:AddState(transmitting)
+mySM:AddState(shrink)
 
-stateMachine:AddParameter("transmitting", false)
-stateMachine:AddParameter("animationEnd",{type = "trigger", status = false})
+mySM:AddParameter("transmitting", false)
+mySM:AddParameter("animationEnd",{type = "trigger", status = false})
 
-stateMachine:AddStartTransition(idle)
-stateMachine:AddTransition(transition.New(idle, popup, function(params) return params.transmitting end))
-stateMachine:AddTransition(transition.New(popup, transmitting, function(params) return params.animationEnd.state end))
-stateMachine:AddTransition(transition.New(transmitting, shrink, function(params) return not params.transmitting end))
-stateMachine:AddTransition(transition.New(shrink, idle, function(params) return params.animationEnd.state end))
+mySM:AddStartTransition(idle)
+mySM:AddTransition(transition.New(idle, popup, function(params) return params.transmitting end))
+mySM:AddTransition(transition.New(popup, transmitting, function(params) return params.animationEnd.state end))
+mySM:AddTransition(transition.New(transmitting, shrink, function(params) return not params.transmitting end))
+mySM:AddTransition(transition.New(shrink, idle, function(params) return params.animationEnd.state end))
 -- }}}
 
 -- execution
-stateMachine:Run()
-print(stateMachine.currentState)
-stateMachine:Update("transmitting", true)
-print(stateMachine.currentState)
-stateMachine:Update("animationEnd", {}) -- any value can be supplied
-print(stateMachine.currentState)
-stateMachine:Update("transmitting", false)
-print(stateMachine.currentState)
-stateMachine:Update("animationEnd", {}) -- any value can be supplied
-print(stateMachine.currentState)
+mySM:Run()
+print(mySM.currentState)
+mySM:Update("transmitting", true)
+print(mySM.currentState)
+mySM:Update("animationEnd", {}) -- any value can be supplied
+print(mySM.currentState)
+mySM:Update("transmitting", false)
+print(mySM.currentState)
+mySM:Update("animationEnd", {}) -- any value can be supplied
+print(mySM.currentState)

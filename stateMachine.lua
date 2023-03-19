@@ -1,9 +1,10 @@
 local transition = require "transition"
 
-asm = {}
+---@class stateMachine
+stateMachine = {}
 
----Create new asm instance
-function asm.New()
+---Create new stateMachine instance
+function stateMachine.New()
   local startState = "Start"
   local obj = { currentState = startState
               , states = {}
@@ -12,24 +13,24 @@ function asm.New()
             }
 
   local function toStr(self)
-    return string.format("(asm :currentState %s\n\t:states %s)",
+    return string.format("(stateMachine :currentState %s\n\t:states %s)",
                         self.currentState, self.states)
   end
 
-  return setmetatable(obj, {__index=asm, __tostring=toStr})
+  return setmetatable(obj, {__index=stateMachine, __tostring=toStr})
 end
 
-function asm:AddTransition(transition)
+function stateMachine:AddTransition(transition)
   table.insert(self.transitions, transition)
 end
 
 ---@param state any
-function asm:AddStartTransition(state)
+function stateMachine:AddStartTransition(state)
   table.insert(self.transitions, transition.New(self.currentState, state, function(_) return true end))
 end
 
 ---@param state any
-function asm:AddState(state)
+function stateMachine:AddState(state)
   table.insert(self.states, state)
 end
 
@@ -41,7 +42,7 @@ end
 ---
 ---@param name string
 ---@param initial any initial value for the parameter.
-function asm:AddParameter(name, initial)
+function stateMachine:AddParameter(name, initial)
   self.parameters[name] = initial
 end
 
@@ -49,7 +50,7 @@ end
 ---@param name string
 ---@param value any (But should be valid for 'name' parameter
 ---@return boolean true if update success, false otherwise
-function asm:Update(name, value)
+function stateMachine:Update(name, value)
    ---postHook contains all hook functions required to run at end of Update sequence
    local postHook = function() end
 
@@ -80,7 +81,7 @@ function asm:Update(name, value)
 end
 
 ---Iterate each transitions and find 
-function asm:_CheckTransitions()
+function stateMachine:_CheckTransitions()
   for _, t in pairs(self.transitions) do
     if t:IsFrom(self.currentState) and t:Check(self.parameters) then
       self.currentState = t.to
@@ -89,8 +90,8 @@ function asm:_CheckTransitions()
 end
 
 ---Start executing current state
-function asm:Run()
+function stateMachine:Run()
   self:_CheckTransitions()
 end
 
-return asm
+return stateMachine
